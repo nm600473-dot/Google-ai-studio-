@@ -41,6 +41,7 @@ import {
 import { GlassCard, Button, Badge, Tabs } from '../ui/GlassCard';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAIMemory } from '../../contexts/AIMemoryContext';
+import { supabase } from '../../lib/supabase';
 
 interface Message {
   id: string;
@@ -259,14 +260,46 @@ export function AITutor() {
     setAttachments(prev => prev.filter(a => a.id !== id));
   }, []);
 
-  // Generate AI response (simulated for demo)
-  const generateResponse = useCallback(async (userMessage: string): Promise<string> => {
+  // Generate AI response (simulated or real Edge Function)
+  const generateResponse = useCallback(async (userMessage: string, currentHistory: Message[] = []): Promise<string> => {
     const difficultyLevel = learningProfile?.difficulty_level || 'intermediate';
     const preferredStyle = learningProfile?.preferred_style || 'visual';
     const topic = detectTopicFromMessage(userMessage);
 
-    // Simulated streaming delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // If real Supabase function client is available, invoke the Edge Function
+    if (supabase.functions && typeof supabase.functions.invoke === 'function' && import.meta.env.VITE_SUPABASE_URL) {
+      try {
+        const messagesForApi = [
+          ...currentHistory.map(m => ({
+            role: m.role as 'user' | 'assistant',
+            content: m.content
+          })),
+          { role: 'user' as const, content: userMessage }
+        ];
+
+        const { data, error } = await supabase.functions.invoke('ai-tutor', {
+          body: {
+            messages: messagesForApi,
+            mode: mode,
+            difficulty: difficultyLevel,
+            learningStyle: preferredStyle,
+            context: getConversationContext() || undefined,
+            subject: topic || undefined,
+          }
+        });
+
+        if (error) {
+          console.error('Supabase Edge Function error:', error);
+        } else if (data && (data.response || data.content)) {
+          return data.response || data.content;
+        }
+      } catch (e) {
+        console.error('Error invoking Supabase Edge Function:', e);
+      }
+    }
+
+    // Fallback to simulated response for local/offline/demo mode
+    await new Promise(resolve => setTimeout(resolve, 800));
 
     const responses: Record<TutorMode, () => string> = {
       teach: () => {
@@ -298,7 +331,7 @@ export function AITutor() {
     };
 
     return responses[mode]();
-  }, [mode, learningProfile, weakTopics, topicsNeedingReview, showHint]);
+  }, [mode, learningProfile, weakTopics, topicsNeedingReview, showHint, getConversationContext]);
 
   // Send message
   const handleSend = async () => {
@@ -313,13 +346,14 @@ export function AITutor() {
       attachments: attachments.length > 0 ? [...attachments] : undefined,
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput('');
     setAttachments([]);
     setIsTyping(true);
 
     try {
-      const responseContent = await generateResponse(input);
+      const responseContent = await generateResponse(input, messages);
       const topic = detectTopicFromMessage(input);
 
       const aiMessage: Message = {
