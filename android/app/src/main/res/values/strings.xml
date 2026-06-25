@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Areka</string>
+    <string name="title_activity_main">Areka</string>
+    <string name="package_name">com.areka.app</string>
+    <string name="custom_url_scheme">com.areka.app</string>
+</resources>
