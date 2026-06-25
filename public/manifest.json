@@ -1,0 +1,24 @@
+{
+  "short_name": "Areka",
+  "name": "Areka AI Learning Platform",
+  "description": "Areka - Next-Generation AI Learning Platform for Students",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#07111F",
+  "theme_color": "#07111F",
+  "display": "standalone",
+  "orientation": "portrait"
+}
