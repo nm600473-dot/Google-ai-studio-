@@ -1,0 +1,6 @@
+{
+  "name": "Areka",
+  "description": "Areka is an AI-powered learning platform with personalized tutoring, adaptive quizzes, and gamified learning features.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
