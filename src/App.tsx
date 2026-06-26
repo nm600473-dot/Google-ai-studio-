@@ -16,6 +16,7 @@ import { SettingsPage } from './components/settings/SettingsPage';
 import { SubjectsPage } from './components/subjects/SubjectsPage';
 import { MemoryPage } from './components/memory/MemoryPage';
 import { PreviewPage } from './components/preview/PreviewPage';
+import { EconomicsHub } from './components/economics/EconomicsHub';
 import { FloatingParticles } from './components/ui/Confetti';
 import { WifiOff, Download, X } from 'lucide-react';
 
@@ -105,6 +106,8 @@ function AppContent() {
         return <AnalyticsPage />;
       case 'study-plan':
         return <StudyPlanPage />;
+      case 'economics-guide':
+        return <EconomicsHub />;
       case 'settings':
         return <SettingsPage />;
       case 'memory':

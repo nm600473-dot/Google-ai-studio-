@@ -16,6 +16,7 @@ import {
   X,
   GraduationCap,
   Database,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -27,6 +28,7 @@ interface LayoutProps {
 
 const navItems = [
   { id: 'dashboard', label: 'Home', icon: Home },
+  { id: 'economics-guide', label: 'Economics Hub', icon: TrendingUp },
   { id: 'subjects', label: 'Subjects', icon: BookOpen },
   { id: 'ai-tutor', label: 'AI Tutor', icon: Brain },
   { id: 'quizzes', label: 'Quizzes', icon: Trophy },

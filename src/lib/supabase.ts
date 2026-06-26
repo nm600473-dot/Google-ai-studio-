@@ -239,6 +239,28 @@ const createMockSupabase = () => {
     },
     from(tableName: string) {
       return new MockQueryBuilder(tableName);
+    },
+    storage: {
+      from(bucketName: string) {
+        return {
+          async upload(filePath: string, file: File | Blob, options?: any) {
+            console.log(`[Mock Supabase Storage] Uploading ${filePath} to bucket ${bucketName}`);
+            const fileUrl = await new Promise<string>((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result as string);
+              reader.readAsDataURL(file);
+            });
+            const key = `mock_storage_${bucketName}_${filePath}`;
+            localStorage.setItem(key, fileUrl);
+            return { data: { path: filePath }, error: null };
+          },
+          getPublicUrl(filePath: string) {
+            const key = `mock_storage_${bucketName}_${filePath}`;
+            const stored = localStorage.getItem(key);
+            return { data: { publicUrl: stored || `https://mock-supabase-storage.local/${bucketName}/${filePath}` } };
+          }
+        };
+      }
     }
   } as any;
 };

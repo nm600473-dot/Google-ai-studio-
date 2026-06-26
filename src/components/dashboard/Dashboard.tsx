@@ -380,6 +380,38 @@ export function Dashboard({ onNavigate }: DashboardProps) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55 }}
+        className="mb-6"
+      >
+        <GlassCard className="bg-gradient-to-r from-[#1e1b4b] via-transparent to-[#311042] border-[#ff6b6b]/30">
+          <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#ff6b6b] to-[#7c4dff] flex items-center justify-center shadow-glow-lg">
+              <BookOpen className="w-8 h-8 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex justify-center md:justify-start mb-2">
+                <Badge variant="accent">Ethiopian Curriculum</Badge>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-1">Grade 10 Economics Complete Study Hub</h3>
+              <p className="text-gray-300 text-sm">
+                Fully mapped guide featuring Unit 1 Consumer Behaviour and Unit 2 Demand/Supply, with 30 active recall flashcards, diagnostic practice exams, and specialized AI Tutor.
+              </p>
+            </div>
+            <Button
+              variant="primary"
+              onClick={() => onNavigate('economics-guide')}
+              icon={<ChevronRight className="w-4 h-4" />}
+              iconPosition="right"
+            >
+              Enter Hub
+            </Button>
+          </div>
+        </GlassCard>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6 }}
       >
         <GlassCard className="bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 border-primary/20">
