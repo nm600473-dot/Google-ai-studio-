@@ -59,7 +59,7 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="hidden lg:block text-xl font-display font-bold gradient-text">
-              EduVerse
+              Areka
             </span>
           </motion.div>
         </div>
@@ -253,7 +253,7 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-display font-bold gradient-text">
-                  EduVerse
+                  Areka
                 </span>
               </div>
               <button onClick={() => setSidebarOpen(false)} className="text-gray-400 hover:text-white">
